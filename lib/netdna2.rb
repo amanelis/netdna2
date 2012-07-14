@@ -1,0 +1,47 @@
+require 'oauth'
+
+module NetDna2
+  ### Client class
+  # A Class to initialize our OAuth connection, every
+  # class in this package will be using and inheriting
+  # this class to gain access to the OAuth connection.
+  class Client
+    # Make the access token accessible so we can call the
+    # api with @acces.[HTTP method](/path.json)
+    attr_reader :access, :access_status, :company_alias, :consumer_key,
+      :consumer_secret, :company_alias
+    
+    ### initialize
+    # Setup our OAuth connection here and make attr_accessible
+    # 
+    # @param [String] NetDNA Consumer Key
+    # @param [String] NetDNA Consumer Secret
+    # @param [String] Your company alias in NetDNA
+    # @return [OAuth::Consumer]
+    def initialize consumer_key, consumer_secret, company_alias
+      consumer = OAuth::Consumer.new(
+        consumer_key,
+        consumer_secret,
+        :site => "https://rws.netdna.com",
+        :request_token_path => "/oauth/request_token",
+        :authorize_path => "/oauth/authorize",
+        :access_token_path => "/oauth/access_token",
+        :http_method => :get)
+      @access = OAuth::AccessToken.new consumer
+      @access_status    = @access.get("/#{company_alias}/account.json")['code']
+      @company_alias    = company_alias
+      @consumer_key     = consumer_key
+      @consumer_secret  = consumer_secret
+    end
+    
+    ### check_access
+    # Basically checks if we were/are authenticated or not. We can refactor this
+    # later to be less shitty. Lets use _return_ to stop control in the method
+    # actually being called so we can halt execution of that method.
+    #
+    # @return [Hash] Returns execution if you are not authenticated
+    def check_access
+      return {code: access_status, message: 'Not authenticated'} unless access_status == 200 || access_status == '200'
+    end
+  end
+end
