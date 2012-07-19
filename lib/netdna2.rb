@@ -43,5 +43,28 @@ module NetDna2
     def check_access
       return {code: access_status, message: 'Not authenticated'} unless access_status == 200 || access_status == '200'
     end
+    
+    ### request
+    # Make anytype of request to the Net DNA API. This was made to use their
+    # ENABLE/DISABLE methods
+    #
+    # @param [Symbol] method the request method
+    # @param [String] endpoint the path endpoint
+    #
+    # @return [Hash] of the response
+    def request method, endpoint, options={}
+      # Check the status of OAuth
+      check_access
+
+      # Call the api for the zones endpoint:
+      # https://rws.netdna.com/ <companyalias> /zones.json
+      response = access.request method, endpoint, options
+
+      # Continue, parse and return the results if we have a successful result
+      JSON.parse(response.body)
+    end
   end
+
+  autoload :Reports,    "netdna2/reports"
+  autoload :Zones,      "netdna2/zones"
 end
