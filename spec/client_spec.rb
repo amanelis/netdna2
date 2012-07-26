@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+
 describe NetDna2::Client do
   context "Client" do
     before(:all) do
