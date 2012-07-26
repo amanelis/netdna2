@@ -1,10 +1,4 @@
 require 'simplecov'
-
-#SimpleCov.start do
-  #add_group 'Soundcloud2', 'lib/soundcloud2'
-  #add_group 'Specs', 'spec'
-#end
-
 require File.expand_path('../../lib/netdna2', __FILE__)
 require 'rubygems'
 require 'rspec'
