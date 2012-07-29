@@ -2,6 +2,7 @@ require 'rubygems'
 require 'rspec'
 require 'simplecov'
 require 'vcr'
+require 'yaml'
 require File.expand_path('../../lib/netdna2', __FILE__)
 
 SimpleCov.start do
@@ -16,7 +17,7 @@ end
 
 # Some statics
 # TODO - replace these with a complete demo account once approved, coming soon
-netdna = YAML.load(File.read("file_path"))
+netdna = YAML.load(File.read(".keys.yml"))
 NETDNA_CONSUMER_KEY     = netdna['netdna']['key']
 NETDNA_CONSUMER_SECRET  = netdna['netdna']['secret']
 NETDNA_COMPANY_ALIAS    = netdna['netdna']['alias']
