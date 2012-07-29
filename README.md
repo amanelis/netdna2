@@ -1,4 +1,4 @@
-# Soundcloud2 API Client
+# NetDna2 API Client
 [![Build Status](https://secure.travis-ci.org/amanelis/netdna2.png)](http://travis-ci.org/amanelis/netdna2)
 
 Simple Ruby wrapper for the NetDNA API.  
