@@ -16,6 +16,7 @@ end
 
 # Some statics
 # TODO - replace these with a complete demo account once approved, coming soon
-NETDNA_CONSUMER_KEY     = 'YOUR_CONSUMER_KEY'
-NETDNA_CONSUMER_SECRET  = 'YOUR_CONSUMER_SECRET'
-NETDNA_COMPANY_ALIAS    = 'COMPANY_ALIAS'
+netdna = YAML.load(File.read("file_path"))
+NETDNA_CONSUMER_KEY     = netdna['netdna']['key']
+NETDNA_CONSUMER_SECRET  = netdna['netdna']['secret']
+NETDNA_COMPANY_ALIAS    = netdna['netdna']['alias']
