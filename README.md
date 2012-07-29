@@ -7,7 +7,7 @@ Simple Ruby wrapper for the NetDNA API.
 
 This library allows you complete access to the NetDNA API for CDN manipulation and alteration of your data. Sample invocation is as follows:
 
-    @client = NetDna2::Client.new 'YOUR_NET_DNA_API_KEY'
+    @client = NetDna2::Client.new NETDNA_CONSUMER_KEY, NETDNA_CONSUMER_SECRET, NETDNA_COMPANY_ALIAS
 
 The client's sole purpose is to make requests and check for authentication. It will return an error status if you are either not authenticated
 or if you have not added your IP address you are making requests from to the whitelist section of the NetDNA preferences section.
