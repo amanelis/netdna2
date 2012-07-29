@@ -12,7 +12,11 @@ This library allows you complete access to the NetDNA API for CDN manipulation a
 The client's sole purpose is to make requests and check for authentication. It will return an error status if you are either not authenticated
 or if you have not added your IP address you are making requests from to the whitelist section of the NetDNA preferences section.
     
-## Basic Usage and examples
+## Basic Usage and examples of Covered Enpoints
+
+### Reports
+
+### Zones
 
 ## Dependencies
 #### Install dependencies using bundler  

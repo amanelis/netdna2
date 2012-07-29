@@ -4,31 +4,41 @@ require 'spec_helper'
 describe NetDna2::Zones do
   context "Zones" do
     before(:all) do
-      @client = NetDna2::Zones.new 
+      @zones = NetDna2::Zones.new 
     end
     
-    # it '.initialize' do
-    #   @client.should_not == nil
-    # end
-    # 
-    # it '@client.access' do
-    #   @client.access.should_not == nil
-    # end
-    # 
-    # it '@client.access_status' do
-    #   @client.access_status.should == nil
-    # end
-    # 
-    # it '@client.company_alias' do
-    #   @client.company_alias.should_not == nil && @client.company_alias.should == NETDNA_COMPANY_ALIAS
-    # end
-    # 
-    # it '@client.consumer_key' do
-    #   @client.consumer_key.should_not == nil && @client.consumer_key.should == NETDNA_CONSUMER_KEY
-    # end
-    # 
-    # it '@client.consumer_secret' do
-    #   @client.consumer_secret.should_not == nil && @client.consumer_secret.should == NETDNA_CONSUMER_SECRET
-    # end
+    it '.initialize' do
+      @zones.should_not == nil
+    end
+    
+    it '@zones.access' do
+      @zones.access.should_not == nil
+    end
+    
+    it '@zones.access_status' do
+      @zones.access_status.should == nil
+    end
+    
+    it '@zones.company_alias' do
+      @zones.company_alias.should_not == nil && @zones.company_alias.should == NETDNA_COMPANY_ALIAS
+    end
+    
+    it '@zones.consumer_key' do
+      @zones.consumer_key.should_not == nil && @zones.consumer_key.should == NETDNA_CONSUMER_KEY
+    end
+    
+    it '@zones.consumer_secret' do
+      @zones.consumer_secret.should_not == nil && @zones.consumer_secret.should == NETDNA_CONSUMER_SECRET
+    end
+    
+    # Zone API endpoint methods
+    it '@zones.list_zones w/out parameters' do
+      @zones.list_zones.should_not == nil 
+    end
+    
+    it '@zones.list_zones WITH parameters' do
+      @zones.list_zones(page: 2).should_not == nil 
+    end
+    
   end
 end

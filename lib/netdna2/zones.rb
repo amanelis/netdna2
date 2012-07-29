@@ -1,3 +1,6 @@
+require 'json'
+require File.join(File.dirname(__FILE__), '..', 'core_ext/hash')
+
 module NetDna2
   # Used to communicate with the Zones part of the API, return data and change
   # data on the CDN zones. List, Get and change a zone. Enable/Disable and purge
@@ -7,7 +10,7 @@ module NetDna2
     # probably be checking the response here, notifying the user if there is any
     # failed authentication.
     def initialize
-      super
+      super(NETDNA_CONSUMER_KEY, NETDNA_CONSUMER_SECRET, NETDNA_COMPANY_ALIAS)
     end
     
     # Returns a list of all zones on your account. This method returns an array
@@ -22,7 +25,7 @@ module NetDna2
     # @param [Hash] options the options to pass in as a query (ie. +{page: 4}+)
     # @return [Hash] the response from NetDNA
     def list_zones options={}
-      request :get, "/#{self.company_alias}/zones.json?#{options.to_query}"
+      request :get, "/#{self.company_alias}/zones.json?#{options.to_q}"
     end
 
     # Gets a summarized count of all zone types on your account. This method
@@ -38,7 +41,7 @@ module NetDna2
     # @param [Hash] options
     # @return [Hash] the response from NetDNA
     def zone_summary options={}
-      request :get, "/#{self.company_alias}/zones.json/summary?#{options.to_query}"
+      request :get, "/#{self.company_alias}/zones.json/summary?#{options.to_q}"
     end
 
     # Counts all zones on your account. This method will return a single hash
@@ -51,7 +54,7 @@ module NetDna2
     #
     # @return [Hash] the response from NetDNA
     def zone_count options={}
-      request :get, "/#{self.company_alias}/zones.json/count?#{options.to_query}"
+      request :get, "/#{self.company_alias}/zones.json/count?#{options.to_q}"
     end
 
 
@@ -98,7 +101,7 @@ module NetDna2
     # inactive::            Flag denoting if the zone has been deleted
     # creation_date::       Date  Created  1.0
     def list_pull_zones options={}
-      request :get, "/#{self.company_alias}/zones/pull.json?#{options.to_query}"
+      request :get, "/#{self.company_alias}/zones/pull.json?#{options.to_q}"
     end
 
     # Creates a new pull zone.
@@ -155,7 +158,7 @@ module NetDna2
     # @return [Hash] the response from NetDNA
     #
     def pull_zones_count options={}
-      request :get, "/#{self.company_alias}/zones/pull.json/count?#{options.to_query}"
+      request :get, "/#{self.company_alias}/zones/pull.json/count?#{options.to_q}"
     end
 
     # Gets a pull zone specified by the *zone_id* parameter
@@ -168,7 +171,7 @@ module NetDna2
     # @return [Hash] the response from NetDNA
     #
     def get_pull_zone zone_id, options={}
-      request :get, "/{self.company_alias}/zones/pull.json/#{zone_id}?#{options.to_query}"
+      request :get, "/{self.company_alias}/zones/pull.json/#{zone_id}?#{options.to_q}"
     end
 
     # Updates a pull zone specified by the *zone_id* parameter
@@ -208,7 +211,7 @@ module NetDna2
     #                       zone in HTTPS mode. You don't need your own SSL
     #                       certificate, our server netdna-ssl.com will be used.
     def update_pull_zone zone_id, options={}
-      request :put, "/#{self.company_alias}/zones/pull.json/#{zone_id}?#{options.to_query}"
+      request :put, "/#{self.company_alias}/zones/pull.json/#{zone_id}?#{options.to_q}"
     end
 
     # Deletes a pull zone specified by the *zone_id* parameter
@@ -220,7 +223,7 @@ module NetDna2
     #
     # @return [Hash] the response from NetDNA
     def delete_pull_zone zone_id, options={}
-      request :delete, "/#{self.company_alias}/zones/pull.json/#{zone_id}?#{options.to_query}"
+      request :delete, "/#{self.company_alias}/zones/pull.json/#{zone_id}?#{options.to_q}"
     end
 
     # Enables a pull zone specified by the *zone_id* parameter
@@ -256,7 +259,7 @@ module NetDna2
     #
     # @return [Hash] the response from NetDNA
     def purge_cache zone_id, options={}
-      request :delete, "/#{self.company_alias}/zones/pull.json/#{zone_id}/cache?#{options.to_query}"
+      request :delete, "/#{self.company_alias}/zones/pull.json/#{zone_id}/cache?#{options.to_q}"
     end
 
     # Returns a list of all push zones on your account
@@ -267,7 +270,7 @@ module NetDna2
     #
     # @return [Hash] the response from NetDNA
     def list_push_zones options={}
-      request :get, "/#{self.company_alias}/zones/push.json?#{options.to_query}"
+      request :get, "/#{self.company_alias}/zones/push.json?#{options.to_q}"
     end
 
     # Creates a new push zone
@@ -289,7 +292,7 @@ module NetDna2
     #                       zone in HTTPS mode. You dont need your own SSL
     #                       certificate, our server netdna-ssl.com will be used.
     def create_push_zone options={}
-      request :post, "/#{self.company_alias}/zones/push.json?#{options.to_query}"
+      request :post, "/#{self.company_alias}/zones/push.json?#{options.to_q}"
     end
 
     # Counts all push zones on your account
@@ -303,7 +306,7 @@ module NetDna2
     # == Possible Parameters for NetDNA
     # count:: The number of pull zones on your account
     def push_zones_count options={}
-      request :get, "/#{self.company_alias}/zones/push.json/count?#{options.to_query}"
+      request :get, "/#{self.company_alias}/zones/push.json/count?#{options.to_q}"
     end
 
     # Gets a push zone specified by the *zone_id* parameter
@@ -315,7 +318,7 @@ module NetDna2
     #
     # @return [Hash] the response from NetDNA
     def get_push_zone zone_id, options={}
-      request :get, "/{self.company_alias}/zones/push.json/#{zone_id}?#{options.to_query}"
+      request :get, "/{self.company_alias}/zones/push.json/#{zone_id}?#{options.to_q}"
     end
 
     # Updates a push zone specified by the *zone_id* parameter
@@ -337,7 +340,7 @@ module NetDna2
     #                       zone in HTTPS mode. You dont need your own SSL
     #                       certificate, our server netdna-ssl.com will be used.
     def update_push_zone zone_id, options={}
-      request :put, "/#{self.company_alias}/zones/push.json/#{zone_id}?#{options.to_query}"
+      request :put, "/#{self.company_alias}/zones/push.json/#{zone_id}?#{options.to_q}"
     end
 
     # Deletes a push zone specified by the *zone_id* parameter
@@ -349,7 +352,7 @@ module NetDna2
     #
     # @return [Hash] the response from NetDNA
     def delete_push_zone zone_id, options={}
-      request :delete, "/#{self.company_alias}/zones/push.json/#{zone_id}?#{options.to_query}"
+      request :delete, "/#{self.company_alias}/zones/push.json/#{zone_id}?#{options.to_q}"
     end
 
     # Enables a push zone specified by the *zone_id* parameter
