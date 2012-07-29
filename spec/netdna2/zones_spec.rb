@@ -33,24 +33,17 @@ describe NetDna2::Zones do
   ## list_zones
   ##########################################
   it '@zones.list_zones w/out parameters' do
-    @zones.list_zones.should_not == nil 
+    list_zones_response = {"code"=>200, "data"=>{"page"=>"1", "pages"=>0, "page_size"=>"50", "current_page_size"=>-50, "total"=>0, "zones"=>[]}}
+    response = @zones.list_zones
+    result   = (list_zones_response == result)
+    result.should == true && response.should_not == nil
   end
   
   it '@zones.list_zones WITH parameters(page: 2) response should return' do
+    list_zones_response = {"code"=>200, "data"=>{"page"=>"2", "pages"=>0, "page_size"=>"50", "current_page_size"=>-50, "total"=>0, "zones"=>[]}}
     response = @zones.list_zones(page: 2)
-    response.should_not == nil && response.class.should == Hash
-  end
-  
-  it '@zones.list_zones WITH parameters(page: 2) should return :page => 2' do
-    response = @zones.list_zones(page: 2)
-    response_page = response['data']['page'].to_i
-    response_page.should == 2 && response['data'].class.should == Hash
-  end
-  
-  it '@zones.list_zones WITH parameters(page: 2) should return :zones => []' do
-    response = @zones.list_zones(page: 2)
-    response_zones = response['data']
-    response_zones.should_not == nil && response_zones.class.should == Array
+    result   = (list_zones_response == result)
+    result.should == true && response.should_not == nil
   end
 
   ## zone_summary 
