@@ -5,7 +5,7 @@ module NetDna2
     # probably be checking the response here, notifying the user if there is any
     # failed authentication.
     def initialize
-      super
+      super(NETDNA_CONSUMER_KEY, NETDNA_CONSUMER_SECRET, NETDNA_COMPANY_ALIAS)
     end
 
     # Gets all zone usage statistics optionally broken up by +report_type+. If

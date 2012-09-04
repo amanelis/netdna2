@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe NetDna2::Client do
   before(:all) do
     @client = NetDna2::Client.new NETDNA_CONSUMER_KEY, NETDNA_CONSUMER_SECRET, NETDNA_COMPANY_ALIAS

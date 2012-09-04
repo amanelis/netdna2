@@ -10,10 +10,10 @@ module NetDna2
     # api with @acces.[HTTP method](/path.json)
     attr_reader :access, :access_status, :company_alias, :consumer_key,
       :consumer_secret, :company_alias
-    
+
     ### initialize
     # Setup our OAuth connection here and make attr_accessible
-    # 
+    #
     # @param [String] NetDNA Consumer Key
     # @param [String] NetDNA Consumer Secret
     # @param [String] Your company alias in NetDNA
@@ -33,7 +33,7 @@ module NetDna2
       @consumer_key     = consumer_key
       @consumer_secret  = consumer_secret
     end
-    
+
     ### check_access
     # Basically checks if we were/are authenticated or not. We can refactor this
     # later to be less shitty. Lets use _return_ to stop control in the method
@@ -43,7 +43,7 @@ module NetDna2
     def check_access
       return {code: access_status, message: 'Not authenticated'} unless access_status == 200 || access_status == '200'
     end
-    
+
     ### request
     # Make anytype of request to the Net DNA API. This was made to use their
     # ENABLE/DISABLE methods
