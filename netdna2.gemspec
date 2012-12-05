@@ -19,6 +19,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency('vcr')
   s.add_development_dependency('fakeweb')
   s.add_development_dependency('oauth')
+  s.add_development_dependency('faker')
+
   s.add_runtime_dependency('hashie')
   s.add_runtime_dependency('yajl-ruby')
   s.add_runtime_dependency('multi_json')  

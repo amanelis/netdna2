@@ -1,3 +1,6 @@
+require 'json'
+require File.join(File.dirname(__FILE__), '..', 'core_ext/hash')
+
 module NetDna2
   # This class returns reports on the CDN's data of the account.
   class Reports < Client
@@ -21,7 +24,7 @@ module NetDna2
     #
     # @return [Hash] the response from NetDNA
     def list_zone_stats report_type, options={}
-      request :get, "/#{self.company_alias}/reports/stats.json/{report_type}?#{options.to_query}"
+      request :get, "/#{self.company_alias}/reports/stats.json/#{report_type}?#{options.to_q}"
     end
 
     # Gets all zone usage statistics specified by +zone_type+ and optionally
@@ -38,7 +41,7 @@ module NetDna2
     #
     # @return [Hash] the response from NetDNA
     def list_zone_stats_by_type zone_type, report_type, options={}
-      request :get, "/#{self.company_alias}/reports/{zone_type}/stats.json/{report_type}?#{options.to_query}"
+      request :get, "/#{self.company_alias}/reports/#{zone_type}/stats.json/#{report_type}?#{options.to_q}"
     end
 
     # Gets the +zone_id+ usage statistics optionally broken up by +report_type+.
@@ -49,12 +52,13 @@ module NetDna2
     #   date_from    now() - 1 month     Y-m-d (e.g. 2012-01-01)    Start date    1.0
     #   date_to    now()      Y-m-d (e.g. 2012-01-01)    End date    1.0
     #
+    # @param [Integer] zone_id
     # @param [String] report_type String(hourly, daily, monthly)
     # @param [Hash] options
     #
     # @return [Hash] the response from NetDNA
-    def list_stats_per_zone report_type, options={}
-      request :get, "/#{self.company_alias}/reports/#{zone_id}/stats.json/{report_type}?#{options.to_query}"
+    def list_stats_per_zone zone_id, report_type, options={}
+      request :get, "/#{self.company_alias}/reports/#{zone_id}/stats.json/#{report_type}?#{options.to_q}"
     end
   end
 end
