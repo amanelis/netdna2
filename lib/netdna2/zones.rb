@@ -171,7 +171,7 @@ module NetDna2
     # @return [Hash] the response from NetDNA
     #
     def get_pull_zone zone_id, options={}
-      request :get, "/{self.company_alias}/zones/pull.json/#{zone_id}?#{options.to_q}"
+      request :get, "/#{self.company_alias}/zones/pull.json/#{zone_id}?#{options.to_q}"
     end
 
     # Updates a pull zone specified by the *zone_id* parameter
@@ -219,11 +219,10 @@ module NetDna2
     # @see http://developer.netdna.com/api/docs
     #
     # @param [Integer] zone_id
-    # @param [Hash] options
     #
     # @return [Hash] the response from NetDNA
-    def delete_pull_zone zone_id, options={}
-      request :delete, "/#{self.company_alias}/zones/pull.json/#{zone_id}?#{options.to_q}"
+    def delete_pull_zone zone_id
+      request :delete, "/#{self.company_alias}/zones/pull.json/#{zone_id}"
     end
 
     # Enables a pull zone specified by the *zone_id* parameter
@@ -348,11 +347,10 @@ module NetDna2
     # @see http://developer.netdna.com/api/docs
     #
     # @param [Integer] zone_id the id of the zone
-    # @param [Hash] options
     #
     # @return [Hash] the response from NetDNA
-    def delete_push_zone zone_id, options={}
-      request :delete, "/#{self.company_alias}/zones/push.json/#{zone_id}?#{options.to_q}"
+    def delete_push_zone zone_id
+      request :delete, "/#{self.company_alias}/zones/push.json/#{zone_id}"
     end
 
     # Enables a push zone specified by the *zone_id* parameter
