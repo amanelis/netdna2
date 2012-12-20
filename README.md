@@ -1,6 +1,8 @@
 # NetDna2 API Client
 [![Build Status](https://secure.travis-ci.org/amanelis/netdna2.png)](http://travis-ci.org/amanelis/netdna2)
 
+[![Dependency Status](https://gemnasium.com/amanelis/netdna2.png)](https://gemnasium.com/amanelis/netdna2)
+
 Simple Ruby wrapper for the NetDNA API.  
 
 ## Overview
