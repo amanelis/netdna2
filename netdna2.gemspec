@@ -17,13 +17,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec')
   s.add_development_dependency('rspec-core')
   s.add_development_dependency('rspec-mocks')
-  s.add_development_dependency('rspec-rails')
   s.add_development_dependency('rspec-expectations')
   s.add_development_dependency('shoulda-matchers')
   s.add_development_dependency('simplecov')
   s.add_development_dependency('capybara')
   s.add_development_dependency('fakeweb')
-  # s.add_development_dependency('webmock')
   s.add_development_dependency('oauth')
   s.add_development_dependency('faker')
 
