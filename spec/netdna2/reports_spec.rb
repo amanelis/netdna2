@@ -15,7 +15,7 @@ describe NetDna2::Reports do
   end
   
   it '@report.access_status' do
-    @report.access_status.should == nil
+    @report.access_status.should_not == nil
   end
   
   it '@report.company_alias' do

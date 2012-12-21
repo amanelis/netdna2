@@ -25,131 +25,178 @@ describe NetDna2::Zones do
     }
   end
   
-  # it '.initialize' do
-  #   @zone.should_not be_nil
-  # end
-  # 
-  # it '@zone.access' do
-  #   @zone.access.should_not be_nil
-  # end
-  # 
-  # it '@zone.access_status' do
-  #   @zone.access_status.should_not be_nil
-  # end
-  # 
-  # it '@zone.company_alias' do
-  #   @zone.company_alias.should == NETDNA_COMPANY_ALIAS && @zone.company_alias.should_not be_nil
-  # end
-  # 
-  # it '@zone.consumer_key' do
-  #   @zone.consumer_key.should == NETDNA_CONSUMER_KEY && @zone.consumer_key.should_not be_nil
-  # end
-  # 
-  # it '@zone.consumer_secret' do
-  #   @zone.consumer_secret.should == NETDNA_CONSUMER_SECRET && @zone.consumer_secret.should_not be_nil
-  # end
-  # 
-  # ## list_zones
-  # ##########################################
-  # it '@zone.list_zones w/out parameters' do
-  #   list_zones_response = {"code"=>200, "data"=>{"page"=>1, "pages"=>0, "page_size"=>"50", "current_page_size"=>0, "total"=>0, "zones"=>[]}}
-  #   response = @zone.list_zones
-  #   result   = (list_zones_response == response)
-  #   response.should_not be_nil && result.should == true
-  # end 
-  # 
-  # ## zone_summary 
-  # ##########################################
-  # it '@zone.zone_summary w/out parameters' do
-  #   @zone.zone_summary.should_not == nil
-  # end
-  # 
-  # it '@zone.zone_summary WITH parameters for [:pull]' do
-  #   pending "@zone.zone_summary with [:pull] parameters"
-  # end
-  # it '@zone.zone_summary WITH parameters for [:push]' do
-  #   pending "@zone.zone_summary with [:push] parameters"
-  # end
-  # it '@zone.zone_summary WITH parameters for [:vod]' do
-  #   pending "@zone.zone_summary with [:vod] parameters"
-  # end
-  # it '@zone.zone_summary WITH parameters for [:live]' do
-  #   pending "@zone.zone_summary with [:live] parameters"
-  # end
-  # 
-  # ## zone_count
-  # ##########################################
-  # it '@zone.zone_count w/out parameters' do
-  #   result = @zone.zone_count
-  #   result['code'].should == 200 && result['data'].should_not be_nil
-  # end 
-  # 
-  # ## list_pull_zones
-  # ##########################################
-  # it '@zone.list_pull_zones' do
-  #   result = @zone.list_pull_zones
-  #   result['code'].should == 200 && result['data'].should_not be_nil
-  # end
-  # 
-  # ## create_pull_zone
-  # ##########################################
-  # it '@zone.create_pull_zone' do 
-  #   result = @zone.create_pull_zone({name: (0...12).map{ ('a'..'z').to_a[rand(26)] }.join, url: "http://#{Faker::Internet.domain_name}"})
-  #   
-  #   puts ''
-  #   puts 'CREATE'
-  #   puts result.inspect
-  #   puts 'CREATE'
-  #   puts ''
-  #   
-  #   result['code'].should == 201 && result['data'].should_not be_nil && result['data']['pullzone'].should_not be_nil
-  # end
-  
-  ## pull_zone_coount
-  it 'should return the pull zone count' do
-    result = @zone.pull_zones_count
-    result.should_not be_nil
+  describe "#initialize" do
+    subject { @zone }
+    
+    context "when super called with three correct parameters {key, secret, alias}" do
+      it { should_not be_nil }
+    end
   end
-  
-  context 'PullZone CRUD' do
-    before(:all) do
-      @pullzone = @zone.create_pull_zone({
-        name: (0...12).map{ ('a'..'z').to_a[rand(26)] }.join, 
-        url: "http://#{Faker::Internet.domain_name}"})
-    end
+
+  describe "#access" do
+    subject { @zone.access }
     
-    it 'should create a valid pullzone' do      
-      @pullzone.should_not be_nil
-    end
-    
-    it 'should return successfully on a valid pull zone get' do
-      result = @zone.get_pull_zone(@pullzone['data']['pullzone']['id'])
-      result.should_not be_nil
-    end
-    
-    it 'should return successfully on a valid pull zone update' do
-      result = @zone.update_pull_zone(@pullzone['data']['pullzone']['id'])
-      result.should_not be_nil
-    end
-    
-    it 'should return successfully on a valid pull zone enable' do
-      result = @zone.enable_pull_zone(@pullzone['data']['pullzone']['id'])
-      result.should_not be_nil
-    end
-    
-    it 'should return successfully on a valid pull zone disable' do
-      result = @zone.disable_pull_zone(@pullzone['data']['pullzone']['id'])
-      result.should_not be_nil
-    end
-    
-    it 'should return successfully on a valid pull zone delete' do
-      result = @zone.delete_pull_zone(@pullzone['data']['pullzone']['id'])
-      result.should_not be_nil
-    end
-    
-    after(:all) do
-      @zone.delete_pull_zone(@pullzone['data']['pullzone']['id'])
+    context "when there is a successful authentication" do
+      it { should_not be_nil }
     end
   end
   
+  describe "#access_status" do
+    subject { @zone.access_status }
+    
+    context "when there is a successful authentication" do
+      it { should eq("200") }
+    end
+  end
+  
+  describe "#company_alias" do
+    subject { @zone.company_alias }
+    
+    context "when a String[company_alias] is passed on intialization" do
+      it { should_not be_nil }
+      it { should eq(NETDNA_COMPANY_ALIAS) }
+    end
+  end
+  
+  describe "#consumer_key" do
+    subject { @zone.consumer_key }
+    
+    context "when a String[consumer_key] is passed on intialization" do
+      it { should_not be_nil }
+      it { should eq(NETDNA_CONSUMER_KEY) }
+    end
+  end
+  
+  describe "#consumer_secret" do
+    subject { @zone.consumer_secret }
+    
+    context "when a String[consumer_secret] is passed on intialization" do
+      it { should_not be_nil }
+      it { should eq(NETDNA_CONSUMER_SECRET) }
+    end
+  end
+  
+   describe "#list_zones" do
+     subject { @zone.list_zones }
+     
+     context "when listing the zones without parameters" do
+       it { should_not be_nil }
+       
+       it "has the correct response code" do
+         subject['code'].should eq(200)
+       end
+       
+       it "has the correct json representation" do
+         list_zones_response  = {"code"=>200, "data"=>{"page"=>1, "pages"=>0, "page_size"=>"50", "current_page_size"=>0, "total"=>0, "zones"=>[]}}         
+         (list_zones_response == subject).should == true
+       end
+     end
+   end
+   
+   describe "#zone_summary" do
+     subject { @zone.zone_summary }
+     
+     context "when called WITH OUT any parameters" do
+       it { should_not be_nil }
+     end
+     
+     context "when called WITH parameters for [:pull]" do
+       pending "@zone.zone_summary with [:pull] parameters"
+     end
+     
+     context "when called WITH parameters for [:push]" do
+       pending "@zone.zone_summary with [:push] parameters"
+     end
+     
+     context "when called WITH parameters for [:vod]" do
+       pending "@zone.zone_summary with [:vod] parameters"
+     end
+     
+     context "when called WITH parameters for [:live]" do
+       pending "@zone.zone_summary with [:live] parameters"
+     end
+   end
+   
+   describe "#zone_count" do
+     subject { @zone.zone_count }
+     
+     context "when called WITH OUT parameters" do
+       it "has the correct response code" do
+         subject['code'].should eq(200)
+       end
+       
+       it 'has the proper response data' do
+         subject['data'].should_not be_nil
+       end
+     end
+   end
+   
+   describe "#list_pull_zones" do
+     subject { @zone.list_pull_zones }
+     
+     context "when called WITH OUT parameters" do
+       it "has the correct response code" do
+         subject['code'].should eq(200)
+       end
+       
+       it 'has the proper response data' do
+         subject['data'].should_not be_nil
+       end
+     end
+   end
+   
+   describe "#create_pull_zone" do
+     subject { @zone.create_pull_zone({name: (0...12).map{ ('a'..'z').to_a[rand(26)] }.join, url: "http://#{Faker::Internet.domain_name}"}) }
+     
+     context "when creating a pullzone with a valid name and url" do
+       it "has the correct response code" do
+         subject['code'].should eq(201)
+       end
+       
+       it 'has the proper response data' do
+         subject['data']['pullzone'].should_not be_nil
+       end
+     end
+   end
+   
+   describe "#pull_zone_coount" do
+     context "when requesting the pull_zone_coount" do
+       it { should_not be_nil }
+     end
+   end
+   
+   describe 'when creating a pullzone' do
+     before(:all) do
+       @pullzone = @zone.create_pull_zone({name: (0...12).map{ ('a'..'z').to_a[rand(26)] }.join, url: "http://#{Faker::Internet.domain_name}"})
+     end
+     
+     it 'should create a valid pullzone' do      
+       @pullzone.should_not be_nil
+     end
+     
+     it 'should return successfully on a valid pull zone get' do
+       @zone.get_pull_zone(@pullzone['data']['pullzone']['id']).should_not be_nil
+     end
+     
+     it 'should return successfully on a valid pull zone update' do
+       @zone.update_pull_zone(@pullzone['data']['pullzone']['id']).should_not be_nil
+     end
+     
+     it 'should return successfully on a valid pull zone enable' do
+       @zone.enable_pull_zone(@pullzone['data']['pullzone']['id']).should_not be_nil
+     end
+     
+     it 'should return successfully on a valid pull zone disable' do
+       @zone.disable_pull_zone(@pullzone['data']['pullzone']['id']).should_not be_nil
+     end
+     
+     it 'should return successfully on a valid pull zone delete' do
+      @zone.delete_pull_zone(@pullzone['data']['pullzone']['id']).should_not be_nil
+     end
+     
+     after(:all) do
+       @zone.delete_pull_zone(@pullzone['data']['pullzone']['id'])
+     end
+   end
+   
 end

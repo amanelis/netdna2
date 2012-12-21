@@ -18,7 +18,11 @@ module NetDna2
     # @param [String] NetDNA Consumer Secret
     # @param [String] Your company alias in NetDNA
     # @return [OAuth::Consumer]
-    def initialize consumer_key, consumer_secret, company_alias
+    def initialize consumer_key, consumer_secret, company_alias      
+      # Catch invalid parameters
+      raise ArgumentError if consumer_key.nil? || consumer_secret.nil? || company_alias.nil?
+      
+      # Create the OAuth request
       consumer = OAuth::Consumer.new(
         consumer_key,
         consumer_secret,
@@ -27,11 +31,16 @@ module NetDna2
         :authorize_path => "/oauth/authorize",
         :access_token_path => "/oauth/access_token",
         :http_method => :get)
-      @access = OAuth::AccessToken.new consumer
-      @access_status    = @access.get("/#{company_alias}/account.json")['code']
+      @access = OAuth::AccessToken.new(consumer)
+
+      # API changed from ['code] to now just .code
+      @access_status    = @access.get("/#{company_alias}/account.json").code      
       @company_alias    = company_alias
       @consumer_key     = consumer_key
-      @consumer_secret  = consumer_secret
+      @consumer_secret  = consumer_secret      
+      
+      # Raise and halt if authentication failed
+      raise SecurityError, "OAuth failed. Check your Key/Secret" if @access_status != "200"
     end
 
     ### check_access
