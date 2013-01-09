@@ -30,7 +30,9 @@ module NetDna2
         :request_token_path => "/oauth/request_token",
         :authorize_path => "/oauth/authorize",
         :access_token_path => "/oauth/access_token",
-        :http_method => :get)
+        :http_method => :get,
+        :timeout => 60,
+        :open_timeout => 60)
       @access = OAuth::AccessToken.new(consumer)
 
       # API changed from ['code] to now just .code
